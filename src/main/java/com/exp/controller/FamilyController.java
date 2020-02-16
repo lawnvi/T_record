@@ -9,31 +9,31 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/nanxi")
+@RequestMapping("/family")
 public class FamilyController {
     @Autowired
     FamilyService familyService;
 
-    @RequestMapping("/addFamily")
+    @RequestMapping("/add")
     public String addFamily(){
         return "/addFamily";
     }
-    @RequestMapping("/addFamily.do")
-    public String addFamilyMethod(@Param("name") String name, @Param("address") String address){
+    @RequestMapping("/add.do")
+    public String addFamilyMethod(@Param("reporterTel") String reporterTel, @Param("psw") String psw){
         Family family = new Family();
-        family.setAddress(address);
-        family.setName(name);
+        family.setAccount(reporterTel);
+        family.setPsw(psw);
         int op = familyService.addFamily(family);
         if(op > 0)
-            return "success";
-        return "error";
+            return "/success";
+        return "/error";
     }
 
-    @RequestMapping("/findFamily")
+    @RequestMapping("/find")
     public String findFamily(){
         return "/findFamily";
     }
-    @RequestMapping("/findFamily.do")
+    @RequestMapping("/find.do")
     public String findFamilyMethod(Model model, @Param("id") int id){
         Family family = familyService.findFamilyById(id);
         model.addAttribute("family", family);
@@ -42,6 +42,6 @@ public class FamilyController {
 
     @RequestMapping("/test")
     public String test(){
-        return "test";
+        return "/test";
     }
 }

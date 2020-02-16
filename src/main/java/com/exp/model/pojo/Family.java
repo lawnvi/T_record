@@ -8,6 +8,15 @@ public class Family {
     private Integer number;
     private Integer reporter;
     private String psw;
+    private String account;
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
 
     public String getPsw() {
         return psw;
@@ -19,7 +28,8 @@ public class Family {
 
     public Family(){
         this.number = 0;
-        this.reporter = 0;
+        this.name = "";
+        this.address = "";
     }
 
     public Integer getId() {
