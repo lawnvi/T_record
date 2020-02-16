@@ -14,6 +14,12 @@ public interface FamilyMapper {
     @Select("select * from family where id = #{id}")
     Family findFamilyById(int id);
 
-    @Update("update family set name = #{name}, address = #{address}, reporter = #{reporter}")
+    @Select("select * from family where account = #{account} && psw = #{psw}")
+    Family loginFamily(Family family);
+
+    @Select("select * from family where account = #{account}")
+    Family findFamilyByAccount(String account);
+
+    @Update("update family set name = #{name}, address = #{address}, reporter = #{reporter} where id = #{id}")
     int updateFamily(Family family);
 }

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+    <title>sign in</title>
+    <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+        function login() {
+            document.body.style.cursor = "wait";
+            var account = document.getElementById("account").value;
+            var psw = document.getElementById("psw").value;
+            console.log("acc:"+account+"  psw:"+psw);
+            let datas = {
+                "account":account,
+                "psw":psw
+            };
+            $.ajax(
+                {
+                    url: '/record_Web_exploded/family/login.do',//这里是写controller中requestMapping中的路径
+                    type: 'POST',//通过get或者post在发送请求
+                    datatype: "json",//这是数据的格式，可以是String、json、xml等
+                    async: true,//同步或异步，如果有多个ajax请求，则设成false
+                    data: datas,//传给后台的参数，也可以手动写成json或其他格式，这里提前在上面创建一个json对象，如果不想这样写，也可以手动{id:<%= user.getId()%>}写一个匿名对象传过去
+                    success: function(data){//回调函数，如果请求成功，则会调用success方法
+                        console.log(data);
+                        if(data === "success"){
+                            console.log("login ok");
+                            window.location.href="../family/mine";
+                        }else {
+                            document.getElementById("hidResult").innerHTML="账号或密码错误";
+                        }
+                        document.body.style.cursor = "default";
+                    },
+                    error: function(){//如果失败则会调用error方法
+                        document.body.style.cursor = "default";
+                        alert("not find "+name);
+                    }
+                }
+            )
+        }
+    </script>
+</head>
+<body>
+账号:<input id="account" type="text" name="account"/>
+密码:<input type="password" id="psw" name="psw"/><p id="hidResult"></p>
+<input type="button" value="登录" onclick="login()"/>
+</body>
+</html>

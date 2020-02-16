@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+    <title>今日温度</title>
+</head>
+<body>
+<h2 th:text="${family.getName()}+体温日报"></h2>
+<h3 th:text="${date}"></h3>
+<h4 th:text="${family.getAddress()}"></h4>
+    <table border="1">
+        <tr>
+            <td>姓名</td>
+            <td>时间</td>
+            <td>体温</td>
+            <td>备注</td>
+        </tr>
+        <tr th:each="log, stat:${list}">
+            <td th:text="${log.getmName()}"/>
+            <td th:text="${log.gettLog().getTime()}"/>
+            <td th:text="${log.gettLog().getT()}"/>
+            <td th:text="${log.gettLog().getNotes()}"/>
+        </tr>
+    </table>
+<button>确认</button>
+</body>
+</html>

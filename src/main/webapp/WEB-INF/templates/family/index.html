@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<p th:text="${family.getAccount()}"></p>
+<p th:text="${memberList.get(1).getName()}"></p>
+<form action="../family/reportT.do" method="post">
+    <table>
+        <tr>
+            <td>姓名</td>
+            <td>性别</td>
+            <td>体温</td>
+            <td>备注</td>
+        </tr>
+        <tr th:each="member, stat:${memberList}">
+            <td th:text="${member.getName()}"/>
+            <td th:text="${member.getSex()}"/>
+            <td><input type="text" name="t"/></td>
+            <td><input type="text" name="notes"/></td>
+            <input hidden name="id" th:value="${member.getId()}"/>
+        </tr>
+    </table>
+    <input type="submit"/>
+</form>
+</body>
+</html>
