@@ -21,9 +21,10 @@
 <!--        <property name="suffix" value=".jsp"/>-->
 <!--    </bean>-->
     <!--过滤静态资源，如果爆红是因为resources资源下还没有这些静态资源，我先注释了-->
-    <mvc:resources location="/css/" mapping="/css/**"/>
-    <mvc:resources location="/images/" mapping="/images/**"/>
-    <mvc:resources location="/js/" mapping="/js/**"/>
+    <mvc:resources location="/static/css/" mapping="/css/**"/>
+    <mvc:resources location="/static/images/" mapping="/images/**"/>
+    <mvc:resources location="/static/js/" mapping="/js/**"/>
+    <mvc:resources location="/static/fonts/" mapping="/fonts/**"/>
 
     <bean id="templateResolver"
           class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">

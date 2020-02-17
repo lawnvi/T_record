@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -59,12 +60,29 @@ public class TLogServiceImpl implements TLogService {
         for (Member member : members) {
             System.out.println("mid:"+member.getId());
             List<TLog> logs = tLogMapper.findTLogsByDate(member.getId(), date);
-            for (TLog log : logs) {
-                TLogVO tLogVO = new TLogVO();
+            if(logs.size() > 0) {
+                TLogVO tLogVO = new TLogVO(logs.get(0));
                 tLogVO.setmName(member.getName());
-                tLogVO.settLog(log);
                 logVOS.add(tLogVO);
             }
+        }
+        return logVOS;
+    }
+
+    @Override
+    public List<TLogVO> findTLogsByFidWithPage(int fid, int page, int number) {
+        int start = (page - 1) * number;
+        List<Member> members = memberMapper.findMembers(fid);
+        List<TLog> logs = tLogMapper.findTLogsByFidWithPage(fid, start, number);
+        HashMap<Integer, String > map = new HashMap<>();
+        for (Member m : members) {
+            map.put(m.getId(), m.getName());
+        }
+        List<TLogVO> logVOS = new ArrayList<>();
+        for (TLog log: logs) {
+            TLogVO vo = new TLogVO(log);
+            vo.setmName(map.get(log.getMid()));
+            logVOS.add(vo);
         }
         return logVOS;
     }
@@ -76,5 +94,10 @@ public class TLogServiceImpl implements TLogService {
             tLogMapper.addTLog(log);
         }
         return true;
+    }
+
+    @Override
+    public int getTLogsCountByFid(int fid) {
+        return tLogMapper.getTLogsCountByFid(fid);
     }
 }

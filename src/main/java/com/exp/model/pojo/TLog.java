@@ -13,7 +13,7 @@ public class TLog {
     public TLog(){
         this.date = Utils.getDate();
         this.time = Utils.getTime();
-        System.out.println("date:"+date+"time:"+time);
+//        System.out.println("date:"+date+"time:"+time);
     }
 
     public String getTime() {

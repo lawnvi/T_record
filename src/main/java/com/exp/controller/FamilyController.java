@@ -86,8 +86,6 @@ public class FamilyController {
     @ResponseBody
     public String reportTemperature(HttpServletRequest request){
         List<TLog> logs = new ArrayList<>();
-        //todo json
-        System.out.println(request.getParameterMap().size()+"dhd");
         String[] t = request.getParameterValues("t");
         String[] notes = request.getParameterValues("notes");
         String[] mid = request.getParameterValues("id");
