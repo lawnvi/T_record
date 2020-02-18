@@ -2,11 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
-    <title>首页</title>
+    <title>上报体温</title>
 </head>
 <body>
-<p th:text="${family.getAccount()}"></p>
-<p th:text="${memberList.get(1).getName()}"></p>
+<a th:text="${memberList.get(1).getName()}+体温数据" th:href="'../admin/todayRecord?page=1&number=12&fid='+${family.getId()}"></a>
+<a th:text="${memberList.get(1).getName()}+家庭成员信息" th:href="'../admin/info?fid='+${family.getId()}"></a>
 <form action="../family/reportT.do" method="post">
     <table>
         <tr>

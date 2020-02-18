@@ -34,19 +34,22 @@ public class FamilyController {
      * 注册家庭单位
      * @return
      */
-    @RequestMapping("/add")
+    @RequestMapping("/register")
     public String addFamily(){
         return "/addFamily";
     }
     @RequestMapping("/add.do")
-    public String addFamilyMethod(@Param("reporterTel") String reporterTel, @Param("psw") String psw){
+    @ResponseBody
+    public String addFamilyMethod(@Param("reporterTel") String reporterTel, @Param("psw") String psw, @Param("familyName") String familyName){
         Family family = new Family();
+        family.setName(familyName);
         family.setAccount(reporterTel);
         family.setPsw(psw);
         int op = familyService.addFamily(family);
+        System.out.println(op);
         if(op > 0)
-            return "/success";
-        return "/error";
+            return "success";
+        return "error";
     }
 
     /**
@@ -96,8 +99,10 @@ public class FamilyController {
             log.setNotes(notes[i]);
             logs.add(log);
         }
-
-        return "操作"+tLogService.reportTs(logs);
+        if(tLogService.reportTs(logs)){
+            return "success";
+        }
+        return "../errorPage";
     }
 
     @RequestMapping("/find")

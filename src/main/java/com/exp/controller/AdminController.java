@@ -10,6 +10,7 @@ import com.exp.service.MemberService;
 import com.exp.service.TLogService;
 import com.exp.utli.Utils;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,12 +55,15 @@ public class AdminController {
         model.addAttribute("list", logVOS1);
         model.addAttribute("date",Utils.getDate());
         model.addAttribute("page", page);
+        model.addAttribute("number", number);
         model.addAttribute("count", count);
+        System.out.println("count:"+count);
         return "/admin/today2";
     }
 
     @RequestMapping("/errorPage")
     public String error(){
+//        model.addAttribute("family", familyService.findFamilyById(Integer.parseInt(fid)));
         return "/admin/notime";
     }
 

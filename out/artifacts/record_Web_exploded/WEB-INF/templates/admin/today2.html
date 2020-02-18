@@ -53,7 +53,10 @@
             var page = document.getElementById("nowPage").value;
             page = page + 1;
             var count = document.getElementById("count").value;
-            if((page-1)*12 + 1 > count){
+            var number = document.getElementById("number").value;
+            console.log((page-1)*number + 1);
+            console.log(count);
+            if((page-1)*number + 1 > count){
                 alert("没有更多数据了")
             }else {
                 turnPage(page);
@@ -63,22 +66,11 @@
             document.body.style.cursor = "wait";
             var fid = document.getElementById("family").innerHTML;
             var aid = 1;
-            var number = 12;
+            var number = document.getElementById("number").value;
             var url = "./todayRecord";
-            var httpRequest = new XMLHttpRequest();//第一步：创建需要的对象
-            httpRequest.open('POST', url, true); //第二步：打开连接
-            httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
-            httpRequest.send('fid='+fid+'&aid='+aid+'&number='+number+'&page='+page);//发送请求 将情头体写在send中
-            /**
-             * 获取数据后的处理程序
-             */
-            httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
-                if (httpRequest.readyState === 4 && httpRequest.status === 200) {//验证请求是否发送成功
-                    // var json = httpRequest.responseText;//获取到服务端返回的数据
-                    console.log("turn page success");
-                }
-                document.body.style.cursor = "default";
-            };
+            var data = '?fid='+fid+'&aid='+aid+'&number='+number+'&page='+page;
+            document.body.style.cursor = "default";
+            window.location.href=url+data;
         }
     </script>
 </head>
@@ -143,7 +135,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="./info" aria-expanded="false" aria-controls="auth">
+                    <a class="nav-link" th:href="'./info?fid='+${family.getId()}">
                         <i class="mdi mdi-account menu-icon"></i>
                         <span class="menu-title">住户信息</span>
                     </a>
@@ -172,7 +164,6 @@
                             <div class="card-body">
                                 <div class="card-title">
                                     <h4 th:text="${date}+体温日报+'℃'"></h4>
-
                                 </div>
                                 <div class="card-category" th:text="${isTest}"> </div>
                                 <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
@@ -182,7 +173,7 @@
                                     </div>
                                     <div class="px-2 pb-2 pb-md-0 text-center" th:each="log, stat:${todayList}">
                                         <div><div class="circles-wrp" style="position: relative; display: inline-block;"><svg xmlns="http://www.w3.org/2000/svg" width="90" height="90"><path fill="transparent" th:stroke="${log.getColor()}" stroke-width="7" d="M 44.99154756204665 3.500000860767564 A 41.5 41.5 0 1 1 44.942357332570026 3.500040032273624 Z" class="circles-maxValueStroke"></path><path fill="transparent" stroke="#F25961" stroke-width="7" d="M 44.99154756204665 3.500000860767564 A 41.5 41.5 0 0 1 44.942357332570026 3.500040032273624 Z" class="circles-valueStroke"></path></svg><div class="circles-text" style="position: absolute; top: 0px; left: 0px; text-align: center; width: 100%; font-size: 21.5px; height: 90px; line-height: 90px;" th:text="${log.gettLog().getT()}+'℃'">35.4</div></div></div>
-                                        <h6 class="fw-bold mt-3 mb-0" th:text="${log.getmName()}"></h6>
+                                        <h6 class="fw-bold mt-3 mb-0" style="font-size: 22px;" th:text="${log.getmName()}"></h6>
                                     </div>
 <!--                                    <div class="px-2 pb-2 pb-md-0 text-center">-->
 <!--                                        <div id="circles-3"><div class="circles-wrp" style="position: relative; display: inline-block;"><svg xmlns="http://www.w3.org/2000/svg" width="90" height="90"><path fill="transparent" stroke="#57c7d4" stroke-width="7" d="M 44.99154756204665 3.500000860767564 A 41.5 41.5 0 1 1 44.942357332570026 3.500040032273624 Z" class="circles-maxValueStroke"></path><path fill="transparent" stroke="#F25961" stroke-width="7" d="M 44.99154756204665 3.500000860767564 A 41.5 41.5 0 0 1" class="circles-valueStroke"></path></svg><div class="circles-text" style="position: absolute; top: 0px; left: 0px; text-align: center; width: 100%; font-size: 31.5px; height: 90px; line-height: 90px;">35.4</div></div></div>-->
@@ -249,6 +240,8 @@
                                             <a href="#" aria-controls="add-row" data-dt-idx="0" tabindex="0" class="page-link" onclick="turnPageBack()">上一页</a>
                                         </li>
                                         <li class="paginate_button page-item" th:text="第+${page}+页" >&nbsp;&nbsp;&nbsp;&nbsp;第1页&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                                        <li class="paginate_button page-item" th:value="${count}" hidden="hidden" id="count"></li>
+                                        <li class="paginate_button page-item" th:value="${number}" hidden="hidden" id="number"></li>
                                         <li hidden th:value="${page}" id="nowPage"></li>
                                         <li class="paginate_button page-item next" id="add-row_next">
                                             <a href="#" aria-controls="add-row" data-dt-idx="0" tabindex="0" class="page-link" onclick="turnPageNext()">下一页</a>

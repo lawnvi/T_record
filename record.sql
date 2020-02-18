@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： 127.0.0.1
--- 生成日期： 2020-02-16 18:40:29
+-- 生成日期： 2020-02-18 09:56:41
 -- 服务器版本： 10.1.38-MariaDB
 -- PHP 版本： 7.3.3
 
@@ -42,7 +42,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `name`, `email`, `tel`, `psw`, `cid`) VALUES
-(1, 'test', '1340878220@qq.com', NULL, '123456', 1);
+(1, 'admin', '1340878220@qq.com', NULL, '123456', 1);
 
 -- --------------------------------------------------------
 
@@ -64,7 +64,7 @@ CREATE TABLE `community` (
 --
 
 INSERT INTO `community` (`id`, `name`, `address`, `Fnumber`, `Mnumber`, `infection`) VALUES
-(1, 'testCommunity', 'internet', NULL, NULL, NULL);
+(1, 'test社区', 'test市', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -90,6 +90,27 @@ INSERT INTO `communitylog` (`id`, `cid`, `abnormal`, `newTravel`, `date`) VALUES
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `dailylog`
+--
+
+CREATE TABLE `dailylog` (
+  `id` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `userKind` varchar(8) NOT NULL,
+  `time` datetime NOT NULL,
+  `operation` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `dailylog`
+--
+
+INSERT INTO `dailylog` (`id`, `uid`, `userKind`, `time`, `operation`) VALUES
+(1, 1, 'admin', '2020-02-18 01:53:16', '2020-2-18 1:53:16:admin-1在127.0.0.1下收到6的体温情况');
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `family`
 --
 
@@ -109,7 +130,7 @@ CREATE TABLE `family` (
 --
 
 INSERT INTO `family` (`id`, `name`, `address`, `number`, `reporter`, `psw`, `cid`, `account`) VALUES
-(6, 'testHouse', 'internet', 1, 1, '123456', NULL, '13263227599');
+(6, 'test家', 'test市', 3, 4, '123456', NULL, '1340878220');
 
 -- --------------------------------------------------------
 
@@ -123,7 +144,7 @@ CREATE TABLE `member` (
   `sex` enum('男','女') DEFAULT NULL,
   `tel` varchar(25) DEFAULT NULL,
   `email` varchar(128) DEFAULT NULL,
-  `backTime` datetime DEFAULT NULL,
+  `backTime` date DEFAULT NULL,
   `backFrom` varchar(128) DEFAULT NULL,
   `fid` int(11) DEFAULT NULL,
   `psw` varchar(20) NOT NULL
@@ -134,9 +155,9 @@ CREATE TABLE `member` (
 --
 
 INSERT INTO `member` (`id`, `name`, `sex`, `tel`, `email`, `backTime`, `backFrom`, `fid`, `psw`) VALUES
-(1, 'testMember', '男', '', '1340878220@qq.com', '2020-01-01 00:00:00', '湖北省武汉市光谷区', 6, '123456'),
-(2, 'testMember2', '女', NULL, NULL, '2020-01-02 00:00:00', '南京', 6, '123456'),
-(4, 'testM3', '女', NULL, NULL, NULL, NULL, 6, '123456');
+(1, 'testM1', '男', '', '', '2020-01-17', '湖北省荆州市', 6, '123456'),
+(2, 'testM2', '女', '', NULL, '2020-01-17', '湖北省荆州市', 6, '123456'),
+(4, 'testM3', '男', '', '1340878220@qq.com', '2020-01-20', '北京市', 6, '123456');
 
 -- --------------------------------------------------------
 
@@ -182,10 +203,30 @@ CREATE TABLE `t_log` (
 --
 
 INSERT INTO `t_log` (`id`, `mid`, `date`, `t`, `notes`, `time`) VALUES
-(1, 1, '2020-02-15', 36.2, NULL, NULL),
-(2, 1, '2020-02-17', 36.6, '无11', '00:13:59'),
-(3, 2, '2020-02-17', 36.61, '无2', '00:13:59'),
-(4, 4, '2020-02-17', 36.601, '无1113', '00:13:59');
+(1, 1, '2020-02-15', 36.2, NULL, '11:10:00'),
+(2, 1, '2020-02-17', 36.7, '无11', '11:13:59'),
+(3, 2, '2020-02-17', 35.7, '无2', '11:13:59'),
+(4, 4, '2020-02-17', 36.5, '无1113', '11:13:50'),
+(5, 1, '2020-02-17', 36.3, '', '16:22:05'),
+(6, 2, '2020-02-17', 36, '', '16:22:05'),
+(7, 4, '2020-02-17', 36.1, '', '16:22:05'),
+(8, 1, '2020-02-18', 36.2, '', '11:04:33'),
+(9, 2, '2020-02-18', 35.4, '', '11:04:33'),
+(10, 4, '2020-02-18', 36.4, '', '11:04:33'),
+(11, 1, '2020-02-18', 36.2, '', '16:30:00'),
+(12, 2, '2020-02-18', 35.5, '', '16:30:00'),
+(13, 4, '2020-02-18', 36.5, '', '16:30:00'),
+(14, 2, '2020-02-15', 35.6, NULL, '11:00:00'),
+(15, 4, '2020-02-15', 36.3, NULL, '11:00:00'),
+(16, 1, '2020-02-15', 36.2, NULL, '16:30:00'),
+(17, 2, '2020-02-15', 35.6, NULL, '16:30:00'),
+(18, 4, '2020-02-15', 36.3, NULL, '16:30:00'),
+(19, 1, '2020-02-16', 36, NULL, '11:00:00'),
+(20, 2, '2020-02-16', 35.6, NULL, '11:00:00'),
+(21, 4, '2020-02-16', 36.6, NULL, '11:00:00'),
+(22, 1, '2020-02-16', 36.3, NULL, '16:30:00'),
+(23, 2, '2020-02-16', 35.9, NULL, '16:30:00'),
+(24, 4, '2020-02-16', 36.6, NULL, '16:30:00');
 
 --
 -- 转储表的索引
@@ -212,10 +253,17 @@ ALTER TABLE `communitylog`
   ADD KEY `cid` (`cid`);
 
 --
+-- 表的索引 `dailylog`
+--
+ALTER TABLE `dailylog`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- 表的索引 `family`
 --
 ALTER TABLE `family`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `account` (`account`),
   ADD KEY `cid` (`cid`),
   ADD KEY `reporter` (`reporter`);
 
@@ -263,10 +311,16 @@ ALTER TABLE `communitylog`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- 使用表AUTO_INCREMENT `dailylog`
+--
+ALTER TABLE `dailylog`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- 使用表AUTO_INCREMENT `family`
 --
 ALTER TABLE `family`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- 使用表AUTO_INCREMENT `member`
@@ -284,7 +338,7 @@ ALTER TABLE `newtravel`
 -- 使用表AUTO_INCREMENT `t_log`
 --
 ALTER TABLE `t_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- 限制导出的表
